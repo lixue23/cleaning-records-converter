@@ -3,7 +3,220 @@ import streamlit as st
 import re
 from io import BytesIO
 import base64
+import sys
+import subprocess
+import streamlit as st
+import sys
+import os
+import subprocess
+import pandas as pd
+import streamlit as st
+import re
+from io import BytesIO
+import base64
+import sys
+import subprocess
+import streamlit as st
+import sys
+st.write(f"Python路径: {sys.path}")
+st.write(f"已安装包: {sys.modules.keys()}")
+REQUIREMENTS = [
+    ('pandas', 'pandas==2.0.3'),
+    ('numpy', 'numpy==1.24.3'),
+    ('openpyxl', 'openpyxl==3.1.2'),
+    ('xlsxwriter', 'xlsxwriter==3.1.9')
+]
 
+
+def check_dependencies():
+    missing = []
+    for package, version in REQUIREMENTS:
+        try:
+            __import__(package)
+        except ImportError:
+            missing.append(version)
+
+    if missing:
+        st.warning("正在安装缺少的依赖...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
+            st.experimental_rerun()
+        except Exception as e:
+            st.error(f"依赖安装失败: {str(e)}")
+            st.stop()
+
+
+check_dependencies()
+
+# 检查并安装缺失的包
+required_packages = {
+    'pandas': 'pandas',
+    'streamlit': 'streamlit',
+    'openpyxl': 'openpyxl',
+    'xlsxwriter': 'xlsxwriter'
+}
+
+missing_packages = []
+for package, name in required_packages.items():
+    try:
+        __import__(package)
+    except ImportError:
+        missing_packages.append(name)
+
+if missing_packages:
+    st.warning(f"缺少必要的包: {', '.join(missing_packages)}。正在尝试安装...")
+    try:
+        subprocess.check_call([
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *missing_packages
+        ])
+        st.experimental_rerun()
+    except Exception as e:
+        st.error(f"安装失败: {str(e)}")
+        st.stop()
+
+# 环境信息（调试用）
+st.sidebar.code(f"Python: {sys.version}\nPath: {sys.path}")
+
+# 设置页面标题和布局
+st.set_page_config(page_title="清洗服务记录转换工具", page_icon="🧹", layout="wide")
+st.title("🧹 清洗服务记录转换工具")
+st.markdown("""
+将无序繁杂的清洗服务记录文本转换为结构化的表格数据，并导出为Excel文件。
+""")
+
+# ... [其余代码保持不变] ...import sys
+# import os
+# import subprocess
+# import pandas as pd
+# import streamlit as st
+# import re
+# from io import BytesIO
+# import base64
+#
+# # 检查并安装缺失的包
+# required_packages = {
+#     'pandas': 'pandas',
+#     'streamlit': 'streamlit',
+#     'openpyxl': 'openpyxl',
+#     'xlsxwriter': 'xlsxwriter'
+# }
+#
+# missing_packages = []
+# for package, name in required_packages.items():
+#     try:
+#         __import__(package)
+#     except ImportError:
+#         missing_packages.append(name)
+#
+# if missing_packages:
+#     st.warning(f"缺少必要的包: {', '.join(missing_packages)}。正在尝试安装...")
+#     try:
+#         subprocess.check_call([
+#             sys.executable,
+#             "-m",
+#             "pip",
+#             "install",
+#             *missing_packages
+#         ])
+#         st.experimental_rerun()
+#     except Exception as e:
+#         st.error(f"安装失败: {str(e)}")
+#         st.stop()
+#
+# # 环境信息（调试用）
+# st.sidebar.code(f"Python: {sys.version}\nPath: {sys.path}")
+#
+# # 设置页面标题和布局
+# st.set_page_config(page_title="清洗服务记录转换工具", page_icon="🧹", layout="wide")
+# st.title("🧹 清洗服务记录转换工具")
+# st.markdown("""
+# 将无序繁杂的清洗服务记录文本转换为结构化的表格数据，并导出为Excel文件。
+# """)
+#
+# # ... [其余代码保持不变] ...import sys
+# import os
+# import subprocess
+# import pandas as pd
+# import streamlit as st
+# import re
+# from io import BytesIO
+# import base64
+#
+# # 检查并安装缺失的包
+# required_packages = {
+#     'pandas': 'pandas',
+#     'streamlit': 'streamlit',
+#     'openpyxl': 'openpyxl',
+#     'xlsxwriter': 'xlsxwriter'
+# }
+#
+# missing_packages = []
+# for package, name in required_packages.items():
+#     try:
+#         __import__(package)
+#     except ImportError:
+#         missing_packages.append(name)
+#
+# if missing_packages:
+#     st.warning(f"缺少必要的包: {', '.join(missing_packages)}。正在尝试安装...")
+#     try:
+#         subprocess.check_call([
+#             sys.executable,
+#             "-m",
+#             "pip",
+#             "install",
+#             *missing_packages
+#         ])
+#         st.experimental_rerun()
+#     except Exception as e:
+#         st.error(f"安装失败: {str(e)}")
+#         st.stop()
+#
+# # 环境信息（调试用）
+
+# st.sidebar.code(f"Python: {sys.version}\nPath: {sys.path}")
+#
+# # 设置页面标题和布局
+# st.set_page_config(page_title="清洗服务记录转换工具", page_icon="🧹", layout="wide")
+# st.title("🧹 清洗服务记录转换工具")
+# st.markdown("""
+# 将无序繁杂的清洗服务记录文本转换为结构化的表格数据，并导出为Excel文件。
+# """)
+#
+# # ... [其余代码保持不变] ...
+# 检查并安装缺失的包
+required_packages = {
+    'pandas': 'pandas',
+    'streamlit': 'streamlit',
+    'openpyxl': 'openpyxl',
+    'xlsxwriter': 'xlsxwriter'
+}
+
+missing_packages = []
+for package, name in required_packages.items():
+    try:
+        __import__(package)
+    except ImportError:
+        missing_packages.append(name)
+
+if missing_packages:
+    st.warning(f"缺少必要的包: {', '.join(missing_packages)}。正在尝试安装...")
+    try:
+        subprocess.check_call([
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *missing_packages
+        ])
+        st.experimental_rerun()
+    except Exception as e:
+        st.error(f"安装失败: {str(e)}")
+        st.stop()
 # 设置页面标题和布局
 st.set_page_config(page_title="清洗服务记录转换工具", page_icon="🧹", layout="wide")
 st.title("🧹 清洗服务记录转换工具")
